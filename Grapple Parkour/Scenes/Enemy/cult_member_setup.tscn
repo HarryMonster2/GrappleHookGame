@@ -1,0 +1,71 @@
+[gd_scene load_steps=9 format=3 uid="uid://ch4noh5wdxfc5"]
+
+[ext_resource type="Script" path="res://Scripts/enemy/cultmember.gd" id="1_6ua0h"]
+[ext_resource type="Texture2D" uid="uid://dgsrbnmvpiotr" path="res://icon.svg" id="1_usi6t"]
+[ext_resource type="PackedScene" uid="uid://bbcwfy1oc52ld" path="res://Scenes/Enemy/blood_ball.tscn" id="2_affy7"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5knbu"]
+radius = 4.0
+height = 12.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ul1nx"]
+size = Vector2(8, 12)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sab6f"]
+radius = 160.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uhbbb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2ta68"]
+radius = 50.0
+
+[node name="blood cult basic" type="RigidBody2D"]
+collision_layer = 64
+collision_mask = 12
+script = ExtResource("1_6ua0h")
+range_obj = ExtResource("2_affy7")
+
+[node name="Icon" type="Sprite2D" parent="."]
+scale = Vector2(0.063, 0.094)
+texture = ExtResource("1_usi6t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_5knbu")
+debug_color = Color(0, 0.611765, 0.619608, 0.419608)
+
+[node name="hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+shape = SubResource("RectangleShape2D_ul1nx")
+debug_color = Color(0, 0.647059, 0.203922, 0.419608)
+
+[node name="canseeplayer" type="RayCast2D" parent="."]
+target_position = Vector2(200, 0)
+collision_mask = 13
+hit_from_inside = true
+
+[node name="rangeattack" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="rangeattack"]
+shape = SubResource("CircleShape2D_sab6f")
+debug_color = Color(0.996078, 0, 0.439216, 0.419608)
+
+[node name="meleerange" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="meleerange"]
+shape = SubResource("CircleShape2D_uhbbb")
+debug_color = Color(0.831373, 0.392157, 0, 0.419608)
+
+[node name="panicrange" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="panicrange"]
+shape = SubResource("CircleShape2D_2ta68")
+debug_color = Color(0.576471, 0.384314, 1, 0.419608)
+
+[node name="attackpoint" type="Node2D" parent="."]
+position = Vector2(0, -12)

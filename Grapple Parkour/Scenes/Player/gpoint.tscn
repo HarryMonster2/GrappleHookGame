@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://doo3fl6guj84s"]
+
+[ext_resource type="Texture2D" uid="uid://cthpiqfm31chj" path="res://Sprites/Grapple/IronGrapple.png" id="1_cj5ud"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1r416"]
+
+[node name="Gpoint" type="StaticBody2D"]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1r416")
+
+[node name="IronGrapple" type="Sprite2D" parent="."]
+z_index = 8
+texture = ExtResource("1_cj5ud")
+offset = Vector2(2.25, 0)
+flip_h = true
+
+[node name="chainpoint" type="Node2D" parent="IronGrapple"]
+position = Vector2(6.85, 0)

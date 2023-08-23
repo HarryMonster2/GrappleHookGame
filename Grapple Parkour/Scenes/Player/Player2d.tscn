@@ -1,0 +1,136 @@
+[gd_scene load_steps=16 format=3 uid="uid://boxqp8nvvhajs"]
+
+[ext_resource type="Script" path="res://Scripts/Player/player2d.gd" id="1_msp2u"]
+[ext_resource type="Texture2D" uid="uid://dgsrbnmvpiotr" path="res://icon.svg" id="2_oa3rr"]
+[ext_resource type="Texture2D" uid="uid://klsuw6v1cyuo" path="res://Sprites/Player/health bar/back bar.PNG" id="3_0rhgx"]
+[ext_resource type="Texture2D" uid="uid://cb63qvqh6klgk" path="res://Sprites/Player/health bar/Paint Layer 1.PNG" id="4_o3fup"]
+[ext_resource type="Texture2D" uid="uid://cq5t32jqlimlc" path="res://Sprites/Player/health bar/health bar.png" id="5_lhjjn"]
+[ext_resource type="Texture2D" uid="uid://d00plk6evoomu" path="res://Sprites/Player/weapon box.png" id="6_j152s"]
+[ext_resource type="Texture2D" uid="uid://cthpiqfm31chj" path="res://Sprites/Grapple/IronGrapple.png" id="7_cc3dt"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_8pi7l"]
+friction = 0.0
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_w0ncv"]
+polygon = PackedVector2Array(-4, -6, 4, -6, 4, 6, -4, 6)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_837io"]
+radius = 4.0
+height = 12.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8rsu8"]
+radius = 1.0
+height = 7.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bx3nj"]
+size = Vector2(8, 12)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8imp1"]
+light_mode = 1
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bqmlk"]
+light_mode = 1
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_efh3d"]
+light_mode = 1
+
+[node name="Player2d" type="RigidBody2D"]
+collision_mask = 12
+physics_material_override = SubResource("PhysicsMaterial_8pi7l")
+continuous_cd = 2
+contact_monitor = true
+lock_rotation = true
+script = ExtResource("1_msp2u")
+
+[node name="Target" type="Node2D" parent="."]
+position = Vector2(0, -5)
+
+[node name="Icon" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(-1.78814e-07, 2.23517e-07)
+scale = Vector2(0.0625, 0.09375)
+texture = ExtResource("2_oa3rr")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+light_mask = 2
+occluder = SubResource("OccluderPolygon2D_w0ncv")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(150, 0)
+collision_mask = 20
+collide_with_areas = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_837io")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
+
+[node name="onground" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 12
+
+[node name="is_grounded" type="CollisionShape2D" parent="onground"]
+position = Vector2(0, 5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_8rsu8")
+one_way_collision_margin = 0.0
+debug_color = Color(0.815686, 1, 0, 0.419608)
+
+[node name="hurtbox" type="Area2D" parent="."]
+collision_mask = 224
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
+shape = SubResource("RectangleShape2D_bx3nj")
+debug_color = Color(0.784314, 0, 0.117647, 0.419608)
+
+[node name="Control" type="Control" parent="."]
+light_mask = 0
+visibility_layer = 524288
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="IronGrapple" type="Sprite2D" parent="Control"]
+light_mask = 524288
+visibility_layer = 524288
+z_index = 1050
+material = SubResource("CanvasItemMaterial_8imp1")
+position = Vector2(-221, -97)
+rotation = -0.331797
+scale = Vector2(2.04434, 2.04434)
+texture = ExtResource("7_cc3dt")
+
+[node name="WeaponBox" type="Sprite2D" parent="Control"]
+light_mask = 524288
+visibility_layer = 524288
+z_index = 1050
+material = SubResource("CanvasItemMaterial_bqmlk")
+position = Vector2(-220.25, -103)
+rotation = -1.5708
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("6_j152s")
+
+[node name="current health" type="TextureProgressBar" parent="Control"]
+light_mask = 524288
+visibility_layer = 524288
+z_index = 1050
+material = SubResource("CanvasItemMaterial_efh3d")
+clip_contents = true
+layout_mode = 0
+offset_left = -223.25
+offset_top = -130.0
+offset_right = -181.25
+offset_bottom = -112.0
+scale = Vector2(1.5, 1.5)
+value = 55.0
+allow_greater = true
+texture_under = ExtResource("3_0rhgx")
+texture_over = ExtResource("4_o3fup")
+texture_progress = ExtResource("5_lhjjn")
+texture_progress_offset = Vector2(6, 5.1)
