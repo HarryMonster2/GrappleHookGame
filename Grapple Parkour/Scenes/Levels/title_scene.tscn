@@ -1,11 +1,29 @@
-[gd_scene load_steps=2 format=3 uid="uid://c1g0v2fa4e3nb"]
+[gd_scene load_steps=5 format=3 uid="uid://c1g0v2fa4e3nb"]
 
 [ext_resource type="Script" path="res://Scripts/title_scene.gd" id="1_22mbx"]
+[ext_resource type="Texture2D" uid="uid://ck6jy1mwkootk" path="res://Sprites/titlebd.png" id="2_ikocc"]
+
+[sub_resource type="Gradient" id="Gradient_2opme"]
+offsets = PackedFloat32Array(0, 0.697613)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_klbpe"]
+gradient = SubResource("Gradient_2opme")
+width = 120
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+metadata/_snap_enabled = true
 
 [node name="title_scene" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_22mbx")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.32, 0.32)
+texture = ExtResource("2_ikocc")
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 1
@@ -14,13 +32,19 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -62.5
+offset_left = -62.0
 offset_top = -25.0
-offset_right = 62.5
+offset_right = 63.0
 offset_bottom = 25.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0.462745, 0.443137, 1)
+theme_override_colors/font_outline_color = Color(0.352941, 0.352941, 0.352941, 1)
+theme_override_constants/outline_size = 2
+theme_override_constants/h_separation = 1
 text = "Play"
+icon = SubResource("GradientTexture2D_klbpe")
+flat = true
 icon_alignment = 1
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

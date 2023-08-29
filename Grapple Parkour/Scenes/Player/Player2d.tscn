@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://boxqp8nvvhajs"]
+[gd_scene load_steps=15 format=3 uid="uid://boxqp8nvvhajs"]
 
 [ext_resource type="Script" path="res://Scripts/Player/player2d.gd" id="1_msp2u"]
 [ext_resource type="Texture2D" uid="uid://dgsrbnmvpiotr" path="res://icon.svg" id="2_oa3rr"]
@@ -7,9 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://cq5t32jqlimlc" path="res://Sprites/Player/health bar/health bar.png" id="5_lhjjn"]
 [ext_resource type="Texture2D" uid="uid://d00plk6evoomu" path="res://Sprites/Player/weapon box.png" id="6_j152s"]
 [ext_resource type="Texture2D" uid="uid://cthpiqfm31chj" path="res://Sprites/Grapple/IronGrapple.png" id="7_cc3dt"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_8pi7l"]
-friction = 0.0
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_w0ncv"]
 polygon = PackedVector2Array(-4, -6, 4, -6, 4, 6, -4, 6)
@@ -36,11 +33,12 @@ light_mode = 1
 
 [node name="Player2d" type="RigidBody2D"]
 collision_mask = 12
-physics_material_override = SubResource("PhysicsMaterial_8pi7l")
 continuous_cd = 2
 contact_monitor = true
 lock_rotation = true
 script = ExtResource("1_msp2u")
+speed = 150
+jump_force = 100
 
 [node name="Target" type="Node2D" parent="."]
 position = Vector2(0, -5)
@@ -134,3 +132,6 @@ texture_under = ExtResource("3_0rhgx")
 texture_over = ExtResource("4_o3fup")
 texture_progress = ExtResource("5_lhjjn")
 texture_progress_offset = Vector2(6, 5.1)
+
+[connection signal="body_entered" from="onground" to="." method="_on_onground_body_entered"]
+[connection signal="body_exited" from="onground" to="." method="_on_onground_body_exited"]

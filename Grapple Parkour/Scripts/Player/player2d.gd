@@ -1,10 +1,12 @@
 extends RigidBody2D
 class_name Player_guy
 
-var grappling = false
+var grappling = false 
+var touch_ground = true
 
-@export var speed = 250
-@export var jump = -250
+@export var speed = 200
+@export var jump_force = 50
+
 @export var max_grapple = 150
 @export var starter_health = 100
 
@@ -16,14 +18,14 @@ var grappling = false
 
 @onready var global = get_node("/root/Global")
 
-@onready var player_holder = get_node("/root/Hold_Player")
-@onready var gchain = get_node("/root/Hold_Player/chain")
-@onready var gpoint = get_node("/root/Hold_Player/Gpoint")
-@onready var cpoint = get_node("/root/Hold_Player/Gpoint/cpoint")
-@onready var player = get_node("/root/Hold_Player/Player2d")
-@onready var damper = get_node("/root/Hold_Player/damper")
+@onready var player_holder = get_node("/root/player holder")
+@onready var gchain = get_node("/root/player holder/chain")
+@onready var gpoint = get_node("/root/player holder/Gpoint")
+@onready var cpoint = get_node("/root/player holder/Gpoint/cpoint")
+@onready var player = get_node("/root/player holder/Player2d")
+@onready var damper = get_node("/root/player holder/damper")
 
-func _process(_delta):
+func _physics_process(_delta):
 	#		-grapple hook-	-] https://youtu.be/XhaCuXV99ds [-
 	damper.global_position = player.global_position
 	ray.look_at(get_global_mouse_position())
@@ -68,20 +70,27 @@ func _process(_delta):
 	#		-health-
 	
 	#		-movement-
-	var is_grounded = onground.has_overlapping_bodies()
-	
-	if Input.is_action_pressed("Move_Left") && !linear_velocity.x < -250:
-		apply_central_force(Vector2(-speed, 0))
-	
-	if Input.is_action_pressed("Move_Right") && !linear_velocity.x > 250:
-		apply_central_force(Vector2(speed, 0))
-	
-	if !Input.is_action_pressed("Move_Left") && !Input.is_action_pressed("Move_Right") && is_grounded && !grappling:
-		linear_velocity.x = 0
-	
-	if Input.is_action_just_pressed("Jump") && is_grounded:
-		linear_velocity.y = jump
+	move()
 	#		-movement-
 
 func _health_manager():
 	current_health -= 12
+
+func move():
+	var my_vert_vel = get_linear_velocity().y
+	
+	if Input.is_action_pressed("Move_Right"):
+		set_linear_velocity(Vector2(1 * speed, my_vert_vel))
+	elif Input.is_action_pressed("Move_Left"):
+		set_linear_velocity(Vector2(-1 * speed, my_vert_vel))
+	elif touch_ground: 
+		set_linear_velocity(Vector2(0, my_vert_vel))
+		
+	if Input.is_action_pressed("Jump") && touch_ground:
+		apply_impulse(Vector2(0, -1 * jump_force))
+
+func _on_onground_body_entered(onground):
+	touch_ground = true
+
+func _on_onground_body_exited(onground):
+	touch_ground = false
