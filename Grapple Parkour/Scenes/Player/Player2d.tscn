@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://boxqp8nvvhajs"]
+[gd_scene load_steps=14 format=3 uid="uid://boxqp8nvvhajs"]
 
 [ext_resource type="Script" path="res://Scripts/Player/player2d.gd" id="1_msp2u"]
 [ext_resource type="Texture2D" uid="uid://dgsrbnmvpiotr" path="res://icon.svg" id="2_oa3rr"]
@@ -10,10 +10,6 @@
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_w0ncv"]
 polygon = PackedVector2Array(-4, -6, 4, -6, 4, 6, -4, 6)
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_837io"]
-radius = 4.0
-height = 12.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8rsu8"]
 radius = 1.0
@@ -58,8 +54,8 @@ target_position = Vector2(150, 0)
 collision_mask = 20
 collide_with_areas = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_837io")
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-4, -6, 4, -6, 0, 6)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
