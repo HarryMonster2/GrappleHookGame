@@ -6,5 +6,6 @@ extends RigidBody2D
 func _on_body_entered(body):
 	cult.attack_cooldown = false
 	queue_free()
-	if body == player:
+	var collwith = body
+	if body.has_method("_health_manager"):
 		player._health_manager(25)
