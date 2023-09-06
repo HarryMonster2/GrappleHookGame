@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://dl0ft14t742oc"]
+
+[ext_resource type="TileSet" uid="uid://c7nlxvoq3af2u" path="res://tilesets/solidground.tres" id="1_b6cel"]
+[ext_resource type="Script" path="res://Scripts/enemy/enemyspawner.gd" id="2_cg1dk"]
+[ext_resource type="Script" path="res://Scripts/kill.gd" id="3_rpnh3"]
+[ext_resource type="PackedScene" uid="uid://ch4noh5wdxfc5" path="res://Scenes/Enemy/cult_member_setup.tscn" id="4_rw0lu"]
+
+[node name="level#1" type="Node2D"]
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("1_b6cel")
+format = 2
+layer_0/tile_data = PackedInt32Array(131068, 131073, 0, 131069, 458753, 0, 131070, 196609, 0, 131071, 458753, 0, 65536, 589825, 4, 65537, 524289, 4, 65538, 458753, 0, 65539, 589825, 4, 65554, 589825, 4, 65555, 131073, 0, 65558, 196609, 0, 65557, 524289, 0, 65556, 589825, 4, 65559, 589825, 4, 65560, 524289, 0, 65561, 196609, 0, 65562, 589825, 4, 65563, 524289, 0, 65564, 524289, 4, 65565, 524289, 0, 65566, 524289, 4, 65567, 196609, 0, 65568, 589825, 4, 65569, 524289, 0, 65570, 524289, 0, 65571, 196609, 0, 65572, 196609, 0, 65573, 524289, 0, 65574, 524289, 4, 65575, 196609, 0, 65576, 196609, 0, 65577, 131073, 0, 65578, 524289, 0, 65579, 589825, 4, 65580, 458753, 0, 65581, 458753, 0, 65582, 589825, 4, 65583, 131073, 0, 65584, 196609, 0, 65585, 589825, 4, 65586, 458753, 0, 65587, 524289, 0, 65588, 524289, 0, 65589, 524289, 4, 65590, 524289, 0, 65591, 131073, 0, 65592, 131073, 0, 65593, 196609, 0, 65594, 589825, 4, 65595, 196609, 0, 65596, 131073, 0, 65597, 524289, 0, 65598, 524289, 0, 65599, 458753, 0, 65600, 131073, 0, 65601, 196609, 0, 65602, 524289, 0, 65603, 524289, 0, 65604, 524289, 4, 65605, 458753, 0, 65606, 196609, 0, 65607, 458753, 0, 65608, 524289, 0, 65609, 589825, 4, 65610, 131073, 0, 65611, 524289, 4, 65612, 196609, 0, 65613, 524289, 0, 65614, 524289, 4, 65615, 589825, 4, 65616, 589825, 4, 65617, 524289, 0, 65618, 524289, 0, 65619, 524289, 4, 65620, 131073, 0, 65621, 589825, 4, 65622, 524289, 4, 65623, 524289, 0, 65624, 458753, 0, 65625, 131073, 0, 65626, 524289, 4, 65627, 524289, 4, 65628, 458753, 0, 65629, 524289, 4, 65630, 524289, 0, 65631, 589825, 4, 65632, 524289, 0, 65633, 196609, 0, 65634, 196609, 0, 65635, 524289, 0, 65636, 524289, 4, 65637, 458753, 0, 65638, 524289, 4, 65639, 524289, 4, 65640, 196609, 0, 65641, 458753, 0, -1114107, 589825, 4, -1114106, 524289, 0, -1114105, 196609, 0, -1114104, 131073, 0, -1114103, 524289, 4, -1114102, 524289, 4, -1114101, 458753, 0, -1114100, 524289, 4, -1114099, 524289, 4, -1114098, 524289, 4, -1114097, 524289, 0, -1114096, 589825, 4, -1114095, 524289, 4)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 4
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-16, 4, -16, 8, 16, 8, 16, 4)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(20, -68, 72, -68, 72, -64, 20, -64)
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(72, 4, 424, 4, 424, 8, 72, 8)
+
+[node name="enemyspawnpoint" type="Marker2D" parent="."]
+position = Vector2(406, 2)
+script = ExtResource("2_cg1dk")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 1024
+script = ExtResource("3_rpnh3")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PackedVector2Array(-712, 128, 1920, 128, 1920, 256, -712, 256)
+
+[node name="blood cult basic" parent="." instance=ExtResource("4_rw0lu")]
+position = Vector2(400, -8)
+
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

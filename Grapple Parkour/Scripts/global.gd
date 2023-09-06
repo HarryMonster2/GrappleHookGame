@@ -3,7 +3,7 @@ class_name Global_script
 
 var current_scene = null
 
-@export var blood_cult_cooldown = false
+var packed_scenes : Dictionary
 
 func _ready():
 	var root = get_tree().root
@@ -13,12 +13,17 @@ func goto_scene(path):
 	call_deferred("_deferred_goro_scene", path)
 
 func _deferred_goro_scene(path):
-	current_scene.free()
+	current_scene.queue_free()
 	
-	var s = ResourceLoader.load(path)
-	
-	current_scene = s.instantiate()
-	
+	if packed_scenes.has(path):
+		var to_instance = packed_scenes[path].instantiate()
+		current_scene = to_instance
+	else:
+		var s = load(path)
+		packed_scenes[path] = s
+		var to_instance = packed_scenes[path].instantiate()
+		current_scene = to_instance
+
 	get_tree().root.add_child(current_scene)
 	
 	get_tree().current_scene = current_scene

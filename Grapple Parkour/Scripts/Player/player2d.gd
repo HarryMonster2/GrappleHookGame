@@ -2,6 +2,7 @@ extends RigidBody2D
 class_name Player_guy
 
 var grappling = false 
+var attacking = false
 var touch_ground = true
 
 @export var speed = 200
@@ -13,6 +14,8 @@ var touch_ground = true
 @onready var ray = $RayCast2D
 @onready var onground = $onground
 @onready var hart = $"Control/current health"
+@onready var weapon = $"weapon holder"
+@onready var anim = $AnimationPlayer
 
 @onready var current_health :int = starter_health
 
@@ -25,7 +28,7 @@ var touch_ground = true
 @onready var player = get_node("/root/player holder/Player2d")
 @onready var damper = get_node("/root/player holder/damper")
 
-func _physics_process(_delta):
+func _physics_process(delta):
 	#		-grapple hook-	-] https://youtu.be/XhaCuXV99ds [-
 	damper.global_position = player.global_position
 	ray.look_at(get_global_mouse_position())
@@ -39,7 +42,7 @@ func _physics_process(_delta):
 	else:
 		ray.target_position.x = max_grapple
 	
-	if Input.is_action_just_pressed("Grapple"):
+	if Input.is_action_just_pressed("Grapple") && !attacking:
 		if ray.is_colliding():
 			grappling = true
 			
@@ -60,21 +63,37 @@ func _physics_process(_delta):
 		gchain.visible = false
 		damper.node_b = damper.node_a
 		gpoint.global_position = player.global_position
+	
 	#		-grapple hook-	-] https://youtu.be/XhaCuXV99ds [-
 	
 	#		-health-
 	hart.value = current_health
 	if current_health <= 0:
+		current_health = starter_health
+		set_linear_velocity(Vector2(0, 0))
 		player.global_position = Vector2(0, 0)
-		get_tree().change_scene_to_file("res://Scenes/Levels/hub_world.tscn")
+		global.goto_scene("res://Scenes/Levels/hub_world.tscn")
 	#		-health-
+	
+	#		-attack-
+	attack()
+	#		-attack-
 	
 	#		-movement-
 	move()
 	#		-movement-
 
-func _health_manager():
-	current_health -= 12
+func _health_manager(damage_amount):
+	current_health -= damage_amount
+
+func attack():
+	if Input.is_action_just_pressed("Attack") && !grappling && !attacking:
+		attacking = true
+		weapon.look_at(get_global_mouse_position())
+		anim.set_current_animation("chainknifeatk")
+	elif !anim.is_playing():
+		attacking = false
+		anim.set_current_animation("RESET")
 
 func move():
 	var my_vert_vel = get_linear_velocity().y
@@ -94,3 +113,10 @@ func _on_onground_body_entered(onground):
 
 func _on_onground_body_exited(onground):
 	touch_ground = false
+
+func _on_chainknifehold_body_entered(chainknife):
+	attacking = false
+	anim.set_current_animation("RESET")
+	var collwith = chainknife
+	if collwith.has_method("enemy_health"):
+		collwith.enemy_health(50)

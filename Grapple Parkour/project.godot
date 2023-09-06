@@ -24,7 +24,6 @@ Global="*res://Scripts/global.gd"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/transparent=true
 mouse_cursor/custom_image="res://Sprites/Grapple/Cursor.png"
 mouse_cursor/custom_image_hotspot=Vector2(8.5, 8.5)
 
@@ -96,6 +95,7 @@ Grapple={
 2d_physics/layer_8="Enemy-not-grabbable"
 2d_physics/layer_9="background"
 2d_physics/layer_10="blood_ball"
+2d_physics/layer_11="kill box"
 
 [physics]
 

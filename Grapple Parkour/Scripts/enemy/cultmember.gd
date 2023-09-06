@@ -6,11 +6,15 @@ var has_paniced = false
 var melee_range = false
 var run_away = false
 var run_to = false
+var attack_cooldown = false
+
+@export var enemy_starter_health = 100
 
 @export var range_obj_speed = 250
 @export var range_obj : PackedScene
 
-@onready var target = get_node("/root/Hold_Player/Player2d/Target")
+@onready var current_enemy_health :int = enemy_starter_health
+@onready var target = get_node("/root/player holder/Player2d/Target")
 
 #		-cult selection-
 @export_category("cult selection")
@@ -67,7 +71,7 @@ enum Enemy_Type
 @onready var panic_range = $panicrange
 
 @onready var global = get_node("/root/Global")
-@onready var player = get_node("/root/Hold_Player/Player2d")
+@onready var player = get_node("/root/player holder/Player2d")
 
 func _process(_delta):
 	csp_ray.look_at(player.global_position)
@@ -98,17 +102,23 @@ func _process(_delta):
 		if range_attack.overlaps_body(player) && !melee_range && !panicing:
 			_range_attack()
 	#		-what to do-
+	
+	#		-health-
+	if current_enemy_health <= 0:
+		global_position = Vector2(400, -25)
+		current_enemy_health = enemy_starter_health
+	#		-health-
 
 func _melee_attack():
 	#		-melee attack-
 	if enemy_type == Enemy_Type.cult_blood_basic:
-		print("blood melee")
+		pass
 	#		-melee attack-
 
 func _range_attack():
 	#		-range attack-
-	if enemy_type == Enemy_Type.cult_blood_basic && !global.blood_cult_cooldown:
-		global.blood_cult_cooldown = true
+	if enemy_type == Enemy_Type.cult_blood_basic && !attack_cooldown:
+		attack_cooldown = true
 		var projectile = range_obj.instantiate()
 		get_tree().current_scene.add_child(projectile)
 		projectile.global_position = range_point.global_position
@@ -122,10 +132,11 @@ func _panic():
 	has_paniced = true
 	if enemy_type == Enemy_Type.cult_blood_basic:
 		var choice = randi_range(1, 3)
-		print("blood panic")
-		
 		if choice <= 2:
 			print("1")
 		if choice == 3:
 			print("2")
 	#		-panic options-
+
+func enemy_health(damage):
+	current_enemy_health -= damage

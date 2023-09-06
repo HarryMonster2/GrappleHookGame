@@ -1,12 +1,79 @@
-[gd_scene load_steps=15 format=3 uid="uid://boxqp8nvvhajs"]
+[gd_scene load_steps=23 format=3 uid="uid://boxqp8nvvhajs"]
 
 [ext_resource type="Script" path="res://Scripts/Player/player2d.gd" id="1_msp2u"]
+[ext_resource type="Texture2D" uid="uid://bgi2l3gadtbfs" path="res://Sprites/Weapons/chainknife.png" id="2_juewb"]
 [ext_resource type="Texture2D" uid="uid://dgsrbnmvpiotr" path="res://icon.svg" id="2_oa3rr"]
 [ext_resource type="Texture2D" uid="uid://klsuw6v1cyuo" path="res://Sprites/Player/health bar/back bar.PNG" id="3_0rhgx"]
+[ext_resource type="Texture2D" uid="uid://b3w2kbxrbecdq" path="res://Sprites/Grapple/IronChain.png" id="3_ssoak"]
 [ext_resource type="Texture2D" uid="uid://cb63qvqh6klgk" path="res://Sprites/Player/health bar/Paint Layer 1.PNG" id="4_o3fup"]
 [ext_resource type="Texture2D" uid="uid://cq5t32jqlimlc" path="res://Sprites/Player/health bar/health bar.png" id="5_lhjjn"]
 [ext_resource type="Texture2D" uid="uid://d00plk6evoomu" path="res://Sprites/Player/weapon box.png" id="6_j152s"]
 [ext_resource type="Texture2D" uid="uid://cthpiqfm31chj" path="res://Sprites/Grapple/IronGrapple.png" id="7_cc3dt"]
+
+[sub_resource type="Animation" id="Animation_sve6a"]
+resource_name = "chainknifeatk"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("weapon holder/chainknifehold:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(120, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("weapon holder/chainknifehold/chain:points")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [PackedVector2Array(-6, 0, 0, 0), PackedVector2Array(-6, 0, -1200, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_aa1gc"]
+length = 0.001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("weapon holder/chainknifehold:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("weapon holder/chainknifehold/chain:points")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [PackedVector2Array(-6, 0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xkhnc"]
+_data = {
+"RESET": SubResource("Animation_aa1gc"),
+"chainknifeatk": SubResource("Animation_sve6a")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_koy2s"]
+size = Vector2(2.2, 0.8)
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_w0ncv"]
 polygon = PackedVector2Array(-4, -6, 4, -6, 4, 6, -4, 6)
@@ -21,6 +88,12 @@ height = 7.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bx3nj"]
 size = Vector2(8, 12)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_k1jnk"]
+light_mode = 1
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_sdxvf"]
+light_mode = 1
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8imp1"]
 light_mode = 1
@@ -39,6 +112,33 @@ lock_rotation = true
 script = ExtResource("1_msp2u")
 speed = 150
 jump_force = 100
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_xkhnc")
+}
+
+[node name="weapon holder" type="Node2D" parent="."]
+
+[node name="chainknifehold" type="Area2D" parent="weapon holder"]
+collision_layer = 32
+collision_mask = 204
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="weapon holder/chainknifehold"]
+position = Vector2(1.55, 0)
+shape = SubResource("RectangleShape2D_koy2s")
+
+[node name="Chainknife" type="Sprite2D" parent="weapon holder/chainknifehold"]
+position = Vector2(1, 0)
+rotation = 0.785398
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_juewb")
+
+[node name="chain" type="Line2D" parent="weapon holder/chainknifehold"]
+scale = Vector2(0.1, 0.1)
+points = PackedVector2Array(-6, 0, 0, 0)
+texture = ExtResource("3_ssoak")
+texture_mode = 1
 
 [node name="Target" type="Node2D" parent="."]
 position = Vector2(0, -5)
@@ -85,6 +185,7 @@ debug_color = Color(0.784314, 0, 0.117647, 0.419608)
 [node name="Control" type="Control" parent="."]
 light_mask = 0
 visibility_layer = 524288
+material = SubResource("CanvasItemMaterial_k1jnk")
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -94,14 +195,23 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Chainknife" type="Sprite2D" parent="Control"]
+light_mask = 524288
+visibility_layer = 524288
+material = SubResource("CanvasItemMaterial_sdxvf")
+position = Vector2(-202, -100)
+rotation = 0.258079
+scale = Vector2(2.05, 2.05)
+texture = ExtResource("2_juewb")
+
 [node name="IronGrapple" type="Sprite2D" parent="Control"]
 light_mask = 524288
 visibility_layer = 524288
 z_index = 1050
 material = SubResource("CanvasItemMaterial_8imp1")
-position = Vector2(-221, -97)
+position = Vector2(-223, -112)
 rotation = -0.331797
-scale = Vector2(2.04434, 2.04434)
+scale = Vector2(2.05, 2.05)
 texture = ExtResource("7_cc3dt")
 
 [node name="WeaponBox" type="Sprite2D" parent="Control"]
@@ -109,7 +219,17 @@ light_mask = 524288
 visibility_layer = 524288
 z_index = 1050
 material = SubResource("CanvasItemMaterial_bqmlk")
-position = Vector2(-220.25, -103)
+position = Vector2(-223, -112)
+rotation = -1.5708
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("6_j152s")
+
+[node name="WeaponBox2" type="Sprite2D" parent="Control"]
+light_mask = 524288
+visibility_layer = 524288
+z_index = 1050
+material = SubResource("CanvasItemMaterial_bqmlk")
+position = Vector2(-202, -100)
 rotation = -1.5708
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("6_j152s")
@@ -121,10 +241,10 @@ z_index = 1050
 material = SubResource("CanvasItemMaterial_efh3d")
 clip_contents = true
 layout_mode = 0
-offset_left = -223.25
-offset_top = -130.0
-offset_right = -181.25
-offset_bottom = -112.0
+offset_left = -220.0
+offset_top = -129.0
+offset_right = -178.0
+offset_bottom = -111.0
 scale = Vector2(1.5, 1.5)
 value = 55.0
 allow_greater = true
@@ -133,5 +253,6 @@ texture_over = ExtResource("4_o3fup")
 texture_progress = ExtResource("5_lhjjn")
 texture_progress_offset = Vector2(6, 5.1)
 
+[connection signal="body_entered" from="weapon holder/chainknifehold" to="." method="_on_chainknifehold_body_entered"]
 [connection signal="body_entered" from="onground" to="." method="_on_onground_body_entered"]
 [connection signal="body_exited" from="onground" to="." method="_on_onground_body_exited"]
