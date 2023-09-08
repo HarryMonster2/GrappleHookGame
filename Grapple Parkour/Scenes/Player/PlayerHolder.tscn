@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://bmbdr4xkto88f"]
+[gd_scene load_steps=5 format=3 uid="uid://bmbdr4xkto88f"]
 
 [ext_resource type="PackedScene" uid="uid://boxqp8nvvhajs" path="res://Scenes/Player/Player2d.tscn" id="1_dfwqe"]
 [ext_resource type="Texture2D" uid="uid://b3w2kbxrbecdq" path="res://Sprites/Grapple/IronChain.png" id="2_m42oi"]
 [ext_resource type="Texture2D" uid="uid://cthpiqfm31chj" path="res://Sprites/Grapple/IronGrapple.png" id="3_t7j8h"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bv8ue"]
+light_mode = 1
 
 [node name="player holder" type="Node"]
 
@@ -25,6 +28,7 @@ antialiased = true
 [node name="Gpoint" type="Node2D" parent="."]
 
 [node name="IronGrapple" type="Sprite2D" parent="Gpoint"]
+material = SubResource("CanvasItemMaterial_bv8ue")
 rotation = 3.14159
 texture = ExtResource("3_t7j8h")
 

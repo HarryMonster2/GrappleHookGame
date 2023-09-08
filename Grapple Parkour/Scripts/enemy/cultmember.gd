@@ -9,7 +9,8 @@ var run_to = false
 var attack_cooldown = false
 
 @export var enemy_starter_health = 100
-
+@export var range_cool = 2
+@export var melee_cool = 1
 @export var range_obj_speed = 250
 @export var range_obj : PackedScene
 
@@ -64,6 +65,7 @@ enum Enemy_Type
 @onready var radius_melee = $meleerange/CollisionShape2D
 @onready var radius_panic = $panicrange/CollisionShape2D
 @onready var range_point = $attackpoint
+@onready var atk_timer = $ATKtimer
 
 @onready var csp_ray = $canseeplayer
 @onready var range_attack = $rangeattack
@@ -105,8 +107,9 @@ func _process(_delta):
 	
 	#		-health-
 	if current_enemy_health <= 0:
-		global_position = Vector2(400, -25)
+		#queue_free()
 		current_enemy_health = enemy_starter_health
+		global_position = Vector2(345, -35)
 	#		-health-
 
 func _melee_attack():
@@ -119,6 +122,8 @@ func _range_attack():
 	#		-range attack-
 	if enemy_type == Enemy_Type.cult_blood_basic && !attack_cooldown:
 		attack_cooldown = true
+		atk_timer.wait_time = range_cool
+		atk_timer.start()
 		var projectile = range_obj.instantiate()
 		get_tree().current_scene.add_child(projectile)
 		projectile.global_position = range_point.global_position
@@ -140,3 +145,6 @@ func _panic():
 
 func enemy_health(damage):
 	current_enemy_health -= damage
+
+func _on_at_ktimer_timeout():
+	attack_cooldown = false

@@ -1,8 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://ch4noh5wdxfc5"]
+[gd_scene load_steps=10 format=3 uid="uid://ch4noh5wdxfc5"]
 
 [ext_resource type="Script" path="res://Scripts/enemy/cultmember.gd" id="1_6ua0h"]
 [ext_resource type="Texture2D" uid="uid://dgsrbnmvpiotr" path="res://icon.svg" id="1_usi6t"]
 [ext_resource type="PackedScene" uid="uid://bbcwfy1oc52ld" path="res://Scenes/Enemy/blood_ball.tscn" id="2_affy7"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_km1ex"]
+light_mode = 1
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5knbu"]
 radius = 4.0
@@ -20,12 +23,15 @@ radius = 160.0
 radius = 50.0
 
 [node name="blood cult basic" type="RigidBody2D"]
+material = SubResource("CanvasItemMaterial_km1ex")
 collision_layer = 64
 collision_mask = 12
+lock_rotation = true
 script = ExtResource("1_6ua0h")
 range_obj = ExtResource("2_affy7")
 
 [node name="Icon" type="Sprite2D" parent="."]
+use_parent_material = true
 scale = Vector2(0.063, 0.094)
 texture = ExtResource("1_usi6t")
 
@@ -69,3 +75,8 @@ debug_color = Color(0.576471, 0.384314, 1, 0.419608)
 
 [node name="attackpoint" type="Node2D" parent="."]
 position = Vector2(0, -12)
+
+[node name="ATKtimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="ATKtimer" to="." method="_on_at_ktimer_timeout"]

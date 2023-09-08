@@ -10,33 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://d00plk6evoomu" path="res://Sprites/Player/weapon box.png" id="6_j152s"]
 [ext_resource type="Texture2D" uid="uid://cthpiqfm31chj" path="res://Sprites/Grapple/IronGrapple.png" id="7_cc3dt"]
 
-[sub_resource type="Animation" id="Animation_sve6a"]
-resource_name = "chainknifeatk"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("weapon holder/chainknifehold:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(120, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("weapon holder/chainknifehold/chain:points")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [PackedVector2Array(-6, 0, 0, 0), PackedVector2Array(-6, 0, -1200, 0)]
-}
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vwkq7"]
+light_mode = 1
 
 [sub_resource type="Animation" id="Animation_aa1gc"]
 length = 0.001
@@ -65,6 +40,58 @@ tracks/1/keys = {
 "update": 1,
 "values": [PackedVector2Array(-6, 0, 0, 0)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("weapon holder/chainknifehold/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_sve6a"]
+resource_name = "chainknifeatk"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("weapon holder/chainknifehold:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(120, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("weapon holder/chainknifehold/chain:points")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [PackedVector2Array(-6, 0, 0, 0), PackedVector2Array(-6, 0, -1200, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("weapon holder/chainknifehold/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xkhnc"]
 _data = {
@@ -74,9 +101,6 @@ _data = {
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_koy2s"]
 size = Vector2(2.2, 0.8)
-
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_w0ncv"]
-polygon = PackedVector2Array(-4, -6, 4, -6, 4, 6, -4, 6)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_837io"]
 radius = 4.0
@@ -105,6 +129,7 @@ light_mode = 1
 light_mode = 1
 
 [node name="Player2d" type="RigidBody2D"]
+material = SubResource("CanvasItemMaterial_vwkq7")
 collision_mask = 12
 continuous_cd = 2
 contact_monitor = true
@@ -127,8 +152,10 @@ collision_mask = 204
 [node name="CollisionShape2D" type="CollisionShape2D" parent="weapon holder/chainknifehold"]
 position = Vector2(1.55, 0)
 shape = SubResource("RectangleShape2D_koy2s")
+disabled = true
 
 [node name="Chainknife" type="Sprite2D" parent="weapon holder/chainknifehold"]
+use_parent_material = true
 position = Vector2(1, 0)
 rotation = 0.785398
 scale = Vector2(0.5, 0.5)
@@ -145,13 +172,10 @@ position = Vector2(0, -5)
 
 [node name="Icon" type="Sprite2D" parent="."]
 z_index = 1
+use_parent_material = true
 position = Vector2(-1.78814e-07, 2.23517e-07)
 scale = Vector2(0.0625, 0.09375)
 texture = ExtResource("2_oa3rr")
-
-[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
-light_mask = 2
-occluder = SubResource("OccluderPolygon2D_w0ncv")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 target_position = Vector2(150, 0)
