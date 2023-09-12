@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://bbcwfy1oc52ld"]
+
+[ext_resource type="Script" path="res://Scripts/enemy/enemyrangeatk.gd" id="1_frl72"]
+[ext_resource type="Texture2D" uid="uid://jvoexapk0ahi" path="res://Sprites/enemy/attck/blood ball.png" id="2_kjx0t"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d3cxt"]
+radius = 4.0
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_o1lep"]
+polygon = PackedVector2Array(0, -4, 0, -3, -1, -3, -1, -2, 0, -2, 0, -3, 1, -3, 1, -4, 2, -4, 2, -3, 3, -3, 3, -1, 4, -1, 4, 2, 3, 2, 3, 3, 2, 3, 2, 4, 1, 4, 1, 3, 0, 3, 0, 4, -1, 4, -1, 3, -2, 3, -2, 1, -3, 1, -3, 2, -4, 2, -4, 1, -3, 1, -3, -2, -4, -2, -4, -3, -2, -3, -2, -4)
+
+[node name="blood ball" type="RigidBody2D"]
+collision_layer = 512
+collision_mask = 525
+gravity_scale = 0.01
+continuous_cd = 2
+max_contacts_reported = 1
+contact_monitor = true
+script = ExtResource("1_frl72")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_d3cxt")
+
+[node name="BloodBall" type="Sprite2D" parent="."]
+texture = ExtResource("2_kjx0t")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_o1lep")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 25.0
+one_shot = true
+autostart = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

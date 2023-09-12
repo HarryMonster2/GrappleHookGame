@@ -2,7 +2,7 @@
 
 [ext_resource type="TileSet" uid="uid://c7nlxvoq3af2u" path="res://tilesets/solidground.tres" id="1_82meo"]
 [ext_resource type="TileSet" uid="uid://bd5pikrorckfi" path="res://tilesets/backdrop.tres" id="2_ng56n"]
-[ext_resource type="TileSet" uid="uid://db0lbuj1rkscj" path="res://Scenes/Levels/4ground.tres" id="3_bebof"]
+[ext_resource type="TileSet" uid="uid://db0lbuj1rkscj" path="res://tilesets/4ground.tres" id="3_p30fh"]
 [ext_resource type="Script" path="res://Scripts/kill.gd" id="5_o11wa"]
 [ext_resource type="Script" path="res://Scripts/levelselect.gd" id="6_lby2y"]
 
@@ -36,7 +36,7 @@ layer_0/tile_data = PackedInt32Array(589810, 393217, 0, 524275, 655361, 6, 58981
 [node name="FG" type="TileMap" parent="."]
 modulate = Color(0.705882, 0.705882, 0.705882, 1)
 z_index = 255
-tile_set = ExtResource("3_bebof")
+tile_set = ExtResource("3_p30fh")
 format = 2
 layer_0/tile_data = PackedInt32Array(327712, 786433, 6, 196671, 851969, 10, 262207, 65536, 11, 327743, 65536, 6, 393248, 589825, 10, 458784, 131073, 4, 458785, 589825, 8, 458786, 0, 7, 458787, 0, 7, 458788, 196608, 7, 458789, 0, 7, 458790, 0, 7, 458791, 131072, 7, 458792, 0, 7, 458793, 131072, 7, 458794, 131072, 7, 458795, 196608, 7, 458796, 196608, 7, 458797, 327680, 7, 458798, 196608, 7, 458799, 131072, 7, 458800, 131072, 7, 458801, 0, 7, 458802, 0, 7, 458803, 327680, 7, 458804, 327680, 7, 458805, 327680, 7, 458806, 131072, 7, 458807, 131072, 7, 458808, 0, 7, 458809, 196608, 7, 458810, 131072, 7, 458811, 0, 7, 458812, 131072, 7, 458813, 327680, 7, 458814, 393217, 6, 393279, 524289, 10, 458815, 262145, 8, 196672, 65537, 1)
 

@@ -1,0 +1,110 @@
+[gd_scene load_steps=7 format=3 uid="uid://rlt0wkv3n6pv"]
+
+[ext_resource type="Script" path="res://Scripts/enemy/enemymeleeatk.gd" id="1_0laqi"]
+[ext_resource type="Texture2D" uid="uid://cm3gm5ighnhyq" path="res://Sprites/enemy/attck/enemy emely attck.png" id="2_lieav"]
+
+[sub_resource type="Animation" id="Animation_eewc0"]
+resource_name = "swing"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Area2D:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Area2D:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Area2D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 3.14159, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+
+[sub_resource type="Animation" id="Animation_8b3pf"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Area2D:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Area2D:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Area2D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_08j0d"]
+_data = {
+"RESET": SubResource("Animation_8b3pf"),
+"swing": SubResource("Animation_eewc0")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_is6s5"]
+size = Vector2(2.8, 8.5)
+
+[node name="meleeatkbat" type="Node2D"]
+script = ExtResource("1_0laqi")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "swing"
+libraries = {
+"": SubResource("AnimationLibrary_08j0d")
+}
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 512
+
+[node name="CollisionPolygon2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(9.61651e-07, -11.35)
+shape = SubResource("RectangleShape2D_is6s5")
+
+[node name="EnemyEmelyAttck" type="Sprite2D" parent="Area2D"]
+position = Vector2(9.53674e-07, -10)
+rotation = -0.785398
+scale = Vector2(1, 1)
+texture = ExtResource("2_lieav")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]

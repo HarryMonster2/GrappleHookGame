@@ -27,10 +27,6 @@ window/size/viewport_height=1080
 mouse_cursor/custom_image="res://Sprites/Grapple/Cursor.png"
 mouse_cursor/custom_image_hotspot=Vector2(8.5, 8.5)
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/gut/plugin.cfg", "res://addons/rmsmartshape/plugin.cfg")
-
 [input]
 
 Move_Left={
@@ -94,7 +90,7 @@ Grapple={
 2d_physics/layer_7="Enemy-grabbable"
 2d_physics/layer_8="Enemy-not-grabbable"
 2d_physics/layer_9="background"
-2d_physics/layer_10="blood_ball"
+2d_physics/layer_10="enemyweapon"
 2d_physics/layer_11="kill box"
 
 [physics]
