@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ch4noh5wdxfc5"]
+[gd_scene load_steps=13 format=3 uid="uid://ch4noh5wdxfc5"]
 
 [ext_resource type="Script" path="res://Scripts/enemy/cultmember.gd" id="1_6ua0h"]
 [ext_resource type="Texture2D" uid="uid://dgsrbnmvpiotr" path="res://icon.svg" id="1_usi6t"]
@@ -7,6 +7,9 @@
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_km1ex"]
 light_mode = 1
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0xqbx"]
+friction = 0.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5knbu"]
 radius = 4.0
@@ -23,10 +26,17 @@ radius = 160.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_2ta68"]
 radius = 50.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x7ori"]
+radius = 1.0
+height = 7.0
+
 [node name="blood cult basic" type="RigidBody2D"]
 material = SubResource("CanvasItemMaterial_km1ex")
 collision_layer = 64
 collision_mask = 12
+physics_material_override = SubResource("PhysicsMaterial_0xqbx")
+continuous_cd = 2
+contact_monitor = true
 lock_rotation = true
 script = ExtResource("1_6ua0h")
 range_obj = ExtResource("2_jaqpn")
@@ -75,10 +85,21 @@ collision_layer = 0
 shape = SubResource("CircleShape2D_2ta68")
 debug_color = Color(0.576471, 0.384314, 1, 0.419608)
 
+[node name="onground" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 12
+
+[node name="on_ground" type="CollisionShape2D" parent="onground"]
+position = Vector2(0, 5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_x7ori")
+
 [node name="attackpoint" type="Node2D" parent="."]
 position = Vector2(0, -12)
 
 [node name="ATKtimer" type="Timer" parent="."]
 one_shot = true
 
+[connection signal="body_entered" from="onground" to="." method="_on_onground_body_entered"]
+[connection signal="body_exited" from="onground" to="." method="_on_onground_body_exited"]
 [connection signal="timeout" from="ATKtimer" to="." method="_on_at_ktimer_timeout"]

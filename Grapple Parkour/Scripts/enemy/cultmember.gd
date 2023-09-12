@@ -9,6 +9,7 @@ var range_range = false
 var run_away = false
 var run_to = false
 var attack_cooldown = false
+var touch_ground = false
 
 @export var move_speed = 80
 @export var enemy_starter_health = 100
@@ -115,9 +116,7 @@ func _process(_delta):
 		
 	#		-health-
 	if current_enemy_health <= 0:
-		#queue_free()
-		current_enemy_health = enemy_starter_health
-		global_position = Vector2(345, -35)
+		queue_free()
 	#		-health-
 	
 	#		-movement-
@@ -126,16 +125,17 @@ func _process(_delta):
 
 func move():
 	var my_vert_vel = get_linear_velocity().y
-	if csp_ray.get_collider() == player && !melee_range && !panicing && !range_range && !has_paniced:
+	
+	if csp_ray.get_collider() == player && !melee_range && !panicing && !range_range && !has_paniced && touch_ground:
 		var dric = (player.global_position - global_position).normalized()
 		if dric.x >0:
 			set_linear_velocity(Vector2(1 * move_speed, my_vert_vel))
 		elif dric.x < 0:
 			set_linear_velocity(Vector2(-1 * move_speed, my_vert_vel))
-	else:
+	elif touch_ground:
 		set_linear_velocity(Vector2(0, my_vert_vel))
 	
-	if panicing:
+	if panicing && touch_ground:
 		has_paniced = true
 		if panic_choice <= 2:
 			var dric = (player.global_position - global_position).normalized()
@@ -143,14 +143,12 @@ func move():
 				set_linear_velocity(Vector2(1 * move_speed, my_vert_vel))
 			elif dric.x < 0:
 				set_linear_velocity(Vector2(-1 * move_speed, my_vert_vel))
-			print("1")
 		if panic_choice == 3:
 			var dric = (player.global_position - global_position).normalized()
 			if dric.x >0:
 				set_linear_velocity(Vector2(-1 * move_speed, my_vert_vel))
 			elif dric.x < 0:
 				set_linear_velocity(Vector2(1 * move_speed, my_vert_vel))
-			print("2")
 
 func _melee_attack():
 	#		-melee attack-
@@ -184,3 +182,9 @@ func enemy_health(damage):
 
 func _on_at_ktimer_timeout():
 	attack_cooldown = false
+
+func _on_onground_body_entered(onground):
+	touch_ground = true
+
+func _on_onground_body_exited(onground):
+	touch_ground = false

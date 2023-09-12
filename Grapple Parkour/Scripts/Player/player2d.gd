@@ -4,9 +4,10 @@ class_name Player_guy
 var grappling = false 
 var attacking = false
 var touch_ground = true
+var xpos = global_position.x
 
-@export var speed = 200
-@export var jump_force = 50
+@export var speed = 100
+@export var jump_force = 100
 
 @export var max_grapple = 150
 @export var starter_health = 100
@@ -20,7 +21,6 @@ var touch_ground = true
 @onready var current_health :int = starter_health
 
 @onready var global = get_node("/root/Global")
-
 @onready var player_holder = get_node("/root/player holder")
 @onready var gchain = get_node("/root/player holder/chain")
 @onready var gpoint = get_node("/root/player holder/Gpoint")
@@ -50,6 +50,7 @@ func _physics_process(delta):
 			var distancelength = ray.get_collision_point().distance_to(player.global_position)
 			
 			gpoint.global_position = ray.get_collision_point()
+			gpoint.visible = true
 			gchain.visible = true
 			
 			damper.length = distancelength
@@ -57,13 +58,13 @@ func _physics_process(delta):
 			damper.rest_length = distancelength * 0.75
 			
 			damper.node_b = thingtostick.get_path()
+	
 	if !Input.is_action_pressed("Grapple"):
 		grappling = false
-	if !grappling:
-		gchain.visible = false
 		damper.node_b = damper.node_a
 		gpoint.global_position = player.global_position
-	
+		gchain.visible = false
+		gpoint.visible = false
 	#		-grapple hook-	-] https://youtu.be/XhaCuXV99ds [-
 	
 	#		-health-
@@ -100,16 +101,20 @@ func move():
 	
 	if Input.is_action_pressed("Move_Right"):
 		set_linear_velocity(Vector2(1 * speed, my_vert_vel))
+		xpos = global_position.x
 	elif Input.is_action_pressed("Move_Left"):
 		set_linear_velocity(Vector2(-1 * speed, my_vert_vel))
-	elif touch_ground: 
+		xpos = global_position.x
+	elif touch_ground:
+		global_position.x = xpos
 		set_linear_velocity(Vector2(0, my_vert_vel))
-		
+	
 	if Input.is_action_pressed("Jump") && touch_ground:
 		apply_impulse(Vector2(0, -1 * jump_force))
 
 func _on_onground_body_entered(onground):
 	touch_ground = true
+	xpos = global_position.x
 
 func _on_onground_body_exited(onground):
 	touch_ground = false
