@@ -1,2 +1,2 @@
-# GrappleHootGame
-A game about a man with a grappling hook that has to defeat different cults that are thretining his village and uses grappling hook as both as a way to doge and weave enemy attacks and as a weapon 
+# GrappleHookGame
+A game about a man with a grappling hook who has to defeat different cults that are threatening his village and uses the grappling hook both as a way to dodge and weave enemy attacks and as a weapon 
