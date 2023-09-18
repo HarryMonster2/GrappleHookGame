@@ -1,14 +1,25 @@
-[gd_scene load_steps=24 format=3 uid="uid://boxqp8nvvhajs"]
+[gd_scene load_steps=36 format=3 uid="uid://boxqp8nvvhajs"]
 
 [ext_resource type="Script" path="res://Scripts/Player/player2d.gd" id="1_msp2u"]
 [ext_resource type="Texture2D" uid="uid://bgi2l3gadtbfs" path="res://Sprites/Weapons/chainknife.png" id="2_juewb"]
-[ext_resource type="Texture2D" uid="uid://dgsrbnmvpiotr" path="res://icon.svg" id="2_oa3rr"]
 [ext_resource type="Texture2D" uid="uid://klsuw6v1cyuo" path="res://Sprites/Player/health bar/back bar.PNG" id="3_0rhgx"]
 [ext_resource type="Texture2D" uid="uid://b3w2kbxrbecdq" path="res://Sprites/Grapple/IronChain.png" id="3_ssoak"]
+[ext_resource type="Texture2D" uid="uid://b6bs0yoxss8vt" path="res://Sprites/Player/skull player/playercharacter/player/LAU/left arm up.PNG" id="4_h5lds"]
 [ext_resource type="Texture2D" uid="uid://cb63qvqh6klgk" path="res://Sprites/Player/health bar/Paint Layer 1.PNG" id="4_o3fup"]
+[ext_resource type="Texture2D" uid="uid://cbbv218yxgrbl" path="res://Sprites/Player/skull player/playercharacter/player/LAD/Left arm down.PNG" id="5_ef173"]
 [ext_resource type="Texture2D" uid="uid://cq5t32jqlimlc" path="res://Sprites/Player/health bar/health bar.png" id="5_lhjjn"]
 [ext_resource type="Texture2D" uid="uid://d00plk6evoomu" path="res://Sprites/Player/weapon box.png" id="6_j152s"]
+[ext_resource type="Texture2D" uid="uid://b33e5hjllexm1" path="res://Sprites/Player/skull player/playercharacter/player/LLU/Left leg up.PNG" id="6_jlrmt"]
 [ext_resource type="Texture2D" uid="uid://cthpiqfm31chj" path="res://Sprites/Grapple/IronGrapple.png" id="7_cc3dt"]
+[ext_resource type="Texture2D" uid="uid://rjqeq212tslx" path="res://Sprites/Player/skull player/playercharacter/player/LLD/Left leg down.PNG" id="7_h1pd3"]
+[ext_resource type="Texture2D" uid="uid://y2mraea4xdaf" path="res://Sprites/Player/skull player/playercharacter/player/RLU/Right leg up.PNG" id="8_tq8ix"]
+[ext_resource type="Texture2D" uid="uid://bvkggw7at35f" path="res://Sprites/Player/skull player/playercharacter/player/RLD/Right leg down.PNG" id="9_pu3pk"]
+[ext_resource type="Texture2D" uid="uid://crk272ncfon1r" path="res://Sprites/Player/skull player/playercharacter/player/BM/Body mid.PNG" id="10_lv38j"]
+[ext_resource type="Texture2D" uid="uid://cepuc828kbl8x" path="res://Sprites/Player/skull player/playercharacter/player/BD/Body botton.PNG" id="11_t5j43"]
+[ext_resource type="Texture2D" uid="uid://dkp26824g870y" path="res://Sprites/Player/skull player/playercharacter/player/BU/Body up.PNG" id="12_8wk4t"]
+[ext_resource type="Texture2D" uid="uid://bxlf0c7v5hq8u" path="res://Sprites/Player/skull player/playercharacter/player/H/Head.PNG" id="13_s5kd7"]
+[ext_resource type="Texture2D" uid="uid://7jud4li5kgt3" path="res://Sprites/Player/skull player/playercharacter/player/RAU/Right arm up.PNG" id="14_c0kpy"]
+[ext_resource type="Texture2D" uid="uid://30uatavgy5cj" path="res://Sprites/Player/skull player/playercharacter/player/RAD/Right arm down.PNG" id="15_bg62t"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vwkq7"]
 light_mode = 1
@@ -105,16 +116,19 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_koy2s"]
 size = Vector2(2.2, 0.8)
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_a7br0"]
+light_mode = 1
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_837io"]
-radius = 4.0
-height = 12.0
+radius = 7.0
+height = 32.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8rsu8"]
 radius = 1.0
-height = 7.0
+height = 12.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bx3nj"]
-size = Vector2(8, 12)
+size = Vector2(12, 30)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_k1jnk"]
 light_mode = 1
@@ -172,12 +186,119 @@ texture_mode = 1
 [node name="Target" type="Node2D" parent="."]
 position = Vector2(0, -5)
 
-[node name="Icon" type="Sprite2D" parent="."]
+[node name="sprite" type="Node2D" parent="."]
+modulate = Color(0.901961, 0.901961, 0.901961, 1)
 z_index = 1
+material = SubResource("CanvasItemMaterial_a7br0")
 use_parent_material = true
-position = Vector2(-1.78814e-07, 2.23517e-07)
-scale = Vector2(0.0625, 0.09375)
-texture = ExtResource("2_oa3rr")
+
+[node name="LAU" type="Node2D" parent="sprite"]
+modulate = Color(0.901961, 0.901961, 0.901961, 1)
+use_parent_material = true
+
+[node name="LeftArmUp" type="Sprite2D" parent="sprite/LAU"]
+modulate = Color(0.901961, 0.901961, 0.901961, 1)
+use_parent_material = true
+texture = ExtResource("4_h5lds")
+
+[node name="LAD" type="Node2D" parent="sprite"]
+modulate = Color(0.901961, 0.901961, 0.901961, 1)
+use_parent_material = true
+
+[node name="LeftArmDown" type="Sprite2D" parent="sprite/LAD"]
+modulate = Color(0.901961, 0.901961, 0.901961, 1)
+use_parent_material = true
+texture = ExtResource("5_ef173")
+
+[node name="LLU" type="Node2D" parent="sprite"]
+modulate = Color(0.901961, 0.901961, 0.901961, 1)
+use_parent_material = true
+
+[node name="LeftLegUp" type="Sprite2D" parent="sprite/LLU"]
+modulate = Color(0.901961, 0.901961, 0.901961, 1)
+use_parent_material = true
+texture = ExtResource("6_jlrmt")
+
+[node name="LLD" type="Node2D" parent="sprite"]
+modulate = Color(0.901961, 0.901961, 0.901961, 1)
+use_parent_material = true
+
+[node name="LeftLegDown" type="Sprite2D" parent="sprite/LLD"]
+modulate = Color(0.901961, 0.901961, 0.901961, 1)
+use_parent_material = true
+texture = ExtResource("7_h1pd3")
+
+[node name="RLU" type="Node2D" parent="sprite"]
+modulate = Color(0.901961, 0.901961, 0.901961, 1)
+use_parent_material = true
+
+[node name="RightLegUp" type="Sprite2D" parent="sprite/RLU"]
+modulate = Color(0.901961, 0.901961, 0.901961, 1)
+use_parent_material = true
+texture = ExtResource("8_tq8ix")
+
+[node name="RLD" type="Node2D" parent="sprite"]
+modulate = Color(0.901961, 0.901961, 0.901961, 1)
+use_parent_material = true
+
+[node name="RightLegDown" type="Sprite2D" parent="sprite/RLD"]
+modulate = Color(0.901961, 0.901961, 0.901961, 1)
+use_parent_material = true
+texture = ExtResource("9_pu3pk")
+
+[node name="BM" type="Node2D" parent="sprite"]
+modulate = Color(0.901961, 0.901961, 0.901961, 1)
+use_parent_material = true
+
+[node name="BodyMid" type="Sprite2D" parent="sprite/BM"]
+modulate = Color(0.901961, 0.901961, 0.901961, 1)
+use_parent_material = true
+texture = ExtResource("10_lv38j")
+
+[node name="BB" type="Node2D" parent="sprite"]
+modulate = Color(0.901961, 0.901961, 0.901961, 1)
+use_parent_material = true
+
+[node name="BodyBotton" type="Sprite2D" parent="sprite/BB"]
+modulate = Color(0.901961, 0.901961, 0.901961, 1)
+use_parent_material = true
+texture = ExtResource("11_t5j43")
+
+[node name="BU" type="Node2D" parent="sprite"]
+modulate = Color(0.901961, 0.901961, 0.901961, 1)
+use_parent_material = true
+
+[node name="BodyUp" type="Sprite2D" parent="sprite/BU"]
+modulate = Color(0.901961, 0.901961, 0.901961, 1)
+use_parent_material = true
+texture = ExtResource("12_8wk4t")
+
+[node name="H" type="Node2D" parent="sprite"]
+modulate = Color(0.901961, 0.901961, 0.901961, 1)
+use_parent_material = true
+
+[node name="Head" type="Sprite2D" parent="sprite/H"]
+modulate = Color(0.901961, 0.901961, 0.901961, 1)
+use_parent_material = true
+texture = ExtResource("13_s5kd7")
+
+[node name="RAU" type="Node2D" parent="sprite"]
+modulate = Color(0.901961, 0.901961, 0.901961, 1)
+use_parent_material = true
+
+[node name="RightArmUp" type="Sprite2D" parent="sprite/RAU"]
+modulate = Color(0.901961, 0.901961, 0.901961, 1)
+use_parent_material = true
+texture = ExtResource("14_c0kpy")
+
+[node name="RAD" type="Node2D" parent="sprite"]
+modulate = Color(0.901961, 0.901961, 0.901961, 1)
+use_parent_material = true
+
+[node name="RightArmDown" type="Sprite2D" parent="sprite/RAD"]
+modulate = Color(0.901961, 0.901961, 0.901961, 1)
+use_parent_material = true
+texture = ExtResource("15_bg62t")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 target_position = Vector2(150, 0)
@@ -197,7 +318,7 @@ collision_layer = 0
 collision_mask = 12
 
 [node name="is_grounded" type="CollisionShape2D" parent="onground"]
-position = Vector2(0, 5)
+position = Vector2(0, 15)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_8rsu8")
 debug_color = Color(0.815686, 1, 0, 0.419608)

@@ -12,6 +12,7 @@ var xpos = global_position.x
 @export var max_grapple = 150
 @export var starter_health = 100
 
+@onready var sprite = $sprite
 @onready var ray = $RayCast2D
 @onready var onground = $onground
 @onready var hart = $"Control/current health"
@@ -102,9 +103,11 @@ func move():
 	if Input.is_action_pressed("Move_Right"):
 		set_linear_velocity(Vector2(1 * speed, my_vert_vel))
 		xpos = global_position.x
+		sprite.scale.x = 1
 	elif Input.is_action_pressed("Move_Left"):
 		set_linear_velocity(Vector2(-1 * speed, my_vert_vel))
 		xpos = global_position.x
+		sprite.scale.x = -1
 	elif touch_ground:
 		global_position.x = xpos
 		set_linear_velocity(Vector2(0, my_vert_vel))
