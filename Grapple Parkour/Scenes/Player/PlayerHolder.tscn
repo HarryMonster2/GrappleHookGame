@@ -25,6 +25,7 @@ antialiased = true
 [node name="Gpoint" type="Node2D" parent="."]
 
 [node name="IronGrapple" type="Sprite2D" parent="Gpoint"]
+z_index = 8
 rotation = 3.14159
 texture = ExtResource("3_t7j8h")
 

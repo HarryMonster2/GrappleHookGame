@@ -73,7 +73,7 @@ func _physics_process(delta):
 	if current_health <= 0:
 		current_health = starter_health
 		set_linear_velocity(Vector2(0, 0))
-		player.global_position = Vector2(0, 0)
+		global_position = Vector2(0, 0)
 		global.goto_scene("res://Scenes/Levels/hub_world.tscn")
 	#		-health-
 	
