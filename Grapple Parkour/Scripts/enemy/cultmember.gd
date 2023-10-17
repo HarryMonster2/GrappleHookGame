@@ -61,17 +61,18 @@ enum Enemy_Type
 #		-cult selection-
 
 @export_category("range state")
-@export var max_agro = 200
-@export var melee_radius = 15
-@export var range_radius = 125
-@export var panic_radius = 80
+@export var max_agro = 325
+@export var melee_radius = 18
+@export var range_radius = 225
+@export var panic_radius = 65
 
+@onready var anim = $AnimationTree
 @onready var radius_range = $rangeattack/CollisionShape2D
 @onready var radius_melee = $meleerange/CollisionShape2D
 @onready var radius_panic = $panicrange/CollisionShape2D
 @onready var range_point = $attackpoint
 @onready var atk_timer = $ATKtimer
-
+@onready var sprite = $Sprite
 @onready var csp_ray = $canseeplayer
 @onready var range_attack = $rangeattack
 @onready var melee_attack = $meleerange
@@ -126,13 +127,21 @@ func _process(_delta):
 func move():
 	var my_vert_vel = get_linear_velocity().y
 	
-	if csp_ray.get_collider() == player && !melee_range && !panicing && !range_range && !has_paniced && touch_ground:
+	if csp_ray.get_collider() == player:
 		var dric = (player.global_position - global_position).normalized()
-		if dric.x >0:
+		if dric.x >0 && !melee_range && !panicing && !range_range && !has_paniced && touch_ground:
 			set_linear_velocity(Vector2(1 * move_speed, my_vert_vel))
-		elif dric.x < 0:
+			anim.set("parameters/Transition/transition_request", "Run")
+		elif dric.x < 0 && !melee_range && !panicing && !range_range && !has_paniced && touch_ground:
 			set_linear_velocity(Vector2(-1 * move_speed, my_vert_vel))
+			anim.set("parameters/Transition/transition_request", "Run")
+		
+		if dric.x >0:
+			sprite.scale.x = 1
+		elif dric.x < 0:
+			sprite.scale.x = -1
 	elif touch_ground:
+		anim.set("parameters/Transition/transition_request", "Idle")
 		set_linear_velocity(Vector2(0, my_vert_vel))
 	
 	if panicing && touch_ground:
@@ -166,6 +175,7 @@ func _melee_attack():
 func _range_attack():
 	#		-range attack-
 	if enemy_type == Enemy_Type.cult_blood_basic && !attack_cooldown:
+		anim.set("parameters/ATK/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 		attack_cooldown = true
 		atk_timer.wait_time = range_cool
 		atk_timer.start()
@@ -183,8 +193,8 @@ func enemy_health(damage):
 func _on_at_ktimer_timeout():
 	attack_cooldown = false
 
-func _on_onground_body_entered(onground):
+func _on_onground_body_entered(_onground):
 	touch_ground = true
 
-func _on_onground_body_exited(onground):
+func _on_onground_body_exited(_onground):
 	touch_ground = false

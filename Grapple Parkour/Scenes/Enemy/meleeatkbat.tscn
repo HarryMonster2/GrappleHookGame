@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://rlt0wkv3n6pv"]
+[gd_scene load_steps=8 format=3 uid="uid://rlt0wkv3n6pv"]
 
 [ext_resource type="Script" path="res://Scripts/enemy/enemymeleeatk.gd" id="1_0laqi"]
 [ext_resource type="Texture2D" uid="uid://cm3gm5ighnhyq" path="res://Sprites/enemy/attck/enemy emely attck.png" id="2_lieav"]
@@ -84,6 +84,9 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_is6s5"]
 size = Vector2(2.8, 8.5)
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qmru7"]
+light_mode = 1
+
 [node name="meleeatkbat" type="Node2D"]
 script = ExtResource("1_0laqi")
 
@@ -97,11 +100,12 @@ libraries = {
 collision_layer = 512
 
 [node name="CollisionPolygon2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(9.61651e-07, -11.35)
+position = Vector2(0, -24)
 shape = SubResource("RectangleShape2D_is6s5")
 
 [node name="EnemyEmelyAttck" type="Sprite2D" parent="Area2D"]
-position = Vector2(9.53674e-07, -10)
+material = SubResource("CanvasItemMaterial_qmru7")
+position = Vector2(-4.76837e-07, -23)
 rotation = -0.785398
 texture = ExtResource("2_lieav")
 

@@ -2,8 +2,8 @@ extends Node
 class_name Global_script
 
 var current_scene = null
-
 var packed_scenes : Dictionary
+@onready var player = preload("res://Scenes/Player/PlayerHolder.tscn").instantiate()
 
 func _ready():
 	var root = get_tree().root

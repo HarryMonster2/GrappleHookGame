@@ -60,6 +60,7 @@ material = SubResource("CanvasItemMaterial_wn8ro")
 position = Vector2(916, 130)
 
 [node name="TileMap" type="TileMap" parent="."]
+modulate = Color(0.72549, 0.72549, 0.72549, 1)
 tile_set = ExtResource("6_naxee")
 collision_animatable = true
 format = 2

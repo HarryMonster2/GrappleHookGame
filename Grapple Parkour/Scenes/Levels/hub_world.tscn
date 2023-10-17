@@ -1,14 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://w5lke7c1qfhn"]
+[gd_scene load_steps=5 format=3 uid="uid://w5lke7c1qfhn"]
 
 [ext_resource type="TileSet" uid="uid://bgxq8dgbqlwtg" path="res://tilesets/TMap.tres" id="1_ur346"]
 [ext_resource type="Script" path="res://Scripts/kill.gd" id="5_o11wa"]
 [ext_resource type="Script" path="res://Scripts/levelselect.gd" id="6_lby2y"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ycxue"]
-size = Vector2(36, 17)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_np2ja"]
-size = Vector2(1800, 25)
+size = Vector2(5000, 25)
 
 [node name="hub_world" type="Node2D"]
 
@@ -32,21 +29,43 @@ collision_mask = 193
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Gcoll"]
 polygon = PackedVector2Array(-127, 16, 111, 16, 119, 8, 137, 8, 145, 16, 153, 16, 169, 32, 177, 32, 192, 47, 192, 56, 201, 56, 225, 80, 233, 80, 241, 88, 287, 88, 295, 80, 304, 80, 310, 80, 310, 79, 303, 72, 263, 72, 256, 65, 256, 49, 248, 41, 248, 33, 231, 16, 223, 16, 207, 0, 191, 0, 167, -24, 161, -24, 153, -16, 145, -16, 137, -8, 135, -8, 128, -15, 128, -17, 167, -56, 175, -56, 183, -64, 193, -64, 201, -56, 209, -56, 216, -49, 216, -40, 225, -40, 241, -24, 249, -24, 257, -16, 265, -16, 273, -8, 297, -8, 305, 0, 313, 0, 321, 8, 329, 8, 337, 16, 1249, 16, 1256, 23, 1256, 473, 1249, 480, -1257, 480, -1264, 473, -1264, 23, -1257, 16, -408, 16, -408, -89, -401, -96, -399, -96, -392, -89, -392, -80, -384, -80, -384, -89, -377, -96, -375, -96, -368, -89, -368, -80, -360, -80, -360, -89, -353, -96, -351, -96, -344, -89, -344, -80, -336, -80, -336, -89, -329, -96, -327, -96, -320, -89, -320, -80, -312, -80, -312, -89, -305, -96, -303, -96, -296, -89, -296, -80, -288, -80, -288, -89, -281, -96, -279, -96, -272, -89, -272, -80, -264, -80, -264, -89, -257, -96, -255, -96, -248, -89, -248, -80, -240, -80, -240, -89, -233, -96, -231, -96, -224, -89, -224, -80, -216, -80, -216, -89, -209, -96, -207, -96, -200, -89, -200, -80, -192, -80, -192, -89, -185, -96, -183, -96, -176, -89, -176, -80, -176, -56, -184, -56, -184, -72, -400, -72, -400, -24, -167, -24)
 
-[node name="level select" type="Area2D" parent="."]
-collision_layer = 0
+[node name="level select" type="Node2D" parent="."]
 script = ExtResource("6_lby2y")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="level select"]
-position = Vector2(-6, 3.5)
-shape = SubResource("RectangleShape2D_ycxue")
+[node name="Control" type="Control" parent="level select"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -360.0
+offset_top = -5.0
+offset_right = -320.0
+offset_bottom = 35.0
+
+[node name="L1" type="Button" parent="level select/Control"]
+layout_mode = 0
+offset_left = 137.0
+offset_top = -64.0
+offset_right = 212.0
+offset_bottom = -44.0
+scale = Vector2(0.5, 0.5)
+theme_override_font_sizes/font_size = 8
+text = "Level 1"
+
+[node name="BugL1" type="Button" parent="level select/Control"]
+layout_mode = 0
+offset_left = -38.0
+offset_top = -64.0
+offset_right = 37.0
+offset_bottom = -44.0
+scale = Vector2(0.5, 0.5)
+theme_override_font_sizes/font_size = 8
+text = "bug test"
 
 [node name="killbox" type="Area2D" parent="."]
 script = ExtResource("5_o11wa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="killbox"]
-position = Vector2(90, 184)
+position = Vector2(0, 690)
 shape = SubResource("RectangleShape2D_np2ja")
 
-[connection signal="body_entered" from="level select" to="level select" method="_on_body_entered"]
-[connection signal="body_exited" from="level select" to="level select" method="_on_body_exited"]
+[connection signal="pressed" from="level select/Control/L1" to="level select" method="_on_l_1_pressed"]
 [connection signal="body_entered" from="killbox" to="killbox" method="_on_body_entered"]
