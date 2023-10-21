@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dmiixc45ek5p0"]
+
+[ext_resource type="Script" path="res://Scripts/sound.gd" id="1_idcrp"]
+
+[node name="Sound" type="AudioStreamPlayer2D"]
+autoplay = true
+max_polyphony = 4
+script = ExtResource("1_idcrp")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

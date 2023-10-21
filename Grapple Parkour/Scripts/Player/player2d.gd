@@ -9,7 +9,6 @@ var xpos = global_position.x
 
 @export var speed = 100
 @export var jump_force = 120
-
 @export var max_grapple = 200
 @export var starter_health = 100
 
@@ -19,6 +18,8 @@ var xpos = global_position.x
 @onready var hart = $"Control/current health"
 @onready var weapon = $"weapon holder"
 @onready var anim = $AnimationTree
+
+@onready var sound = preload("res://Scenes/sound.tscn")
 
 @onready var current_health :int = starter_health
 @onready var global = get_node("/root/Global")
@@ -60,6 +61,7 @@ func _physics_process(_delta):
 			damper.rest_length = distancelength * 0.75
 			
 			damper.node_b = thingtostick.get_path()
+			grapple_sound()
 	
 	if !Input.is_action_pressed("Grapple"):
 		grappling = false
@@ -96,6 +98,7 @@ func attack():
 		attacking = true
 		weapon.look_at(get_global_mouse_position())
 		anim.set("parameters/ATK/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+		meele_sound()
 	elif !anim.get("parameters/ATK/active"):
 		attacking = false
 
@@ -143,3 +146,20 @@ func _on_chainknifehold_body_entered(chainknife):
 	var collwith = chainknife
 	if collwith.has_method("enemy_health"):
 		collwith.enemy_health(50)
+
+#		-sound-
+func grapple_sound():
+	var play_sound = sound.instantiate()
+	play_sound.sound_bit("res://Audio/grapple.wav")
+	add_child(play_sound)
+
+func meele_sound():
+	var play_sound = sound.instantiate()
+	play_sound.sound_bit("res://Audio/throwknife.wav")
+	add_child(play_sound)
+
+func footstep():
+	var play_sound = sound.instantiate()
+	play_sound.sound_bit("res://Audio/footstep.wav")
+	add_child(play_sound)
+#		-sound-

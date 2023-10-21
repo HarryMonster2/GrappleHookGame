@@ -54,7 +54,6 @@ input_1/auto_advance = false
 input_1/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_m40bq"]
-graph_offset = Vector2(-356.935, -0.989166)
 nodes/ATK/node = SubResource("AnimationNodeOneShot_i1l2b")
 nodes/ATK/position = Vector2(240, 200)
 nodes/Chainknife/node = SubResource("AnimationNodeAnimation_ff23b")
@@ -72,7 +71,7 @@ nodes/TimeScale/position = Vector2(-200, 260)
 nodes/Transition/node = SubResource("AnimationNodeTransition_7kjbu")
 nodes/Transition/position = Vector2(0, 140)
 nodes/output/position = Vector2(400, 200)
-node_connections = [&"output", 0, &"ATK", &"ATK", 0, &"Transition", &"ATK", 1, &"TimeScale 2", &"TimeScale", 0, &"Run", &"Transition", 0, &"TimeScale 3", &"Transition", 1, &"TimeScale", &"TimeScale 2", 0, &"Chainknife", &"TimeScale 3", 0, &"Idle"]
+node_connections = [&"output", 0, &"ATK", &"ATK", 0, &"Transition", &"ATK", 1, &"TimeScale 2", &"TimeScale", 0, &"Run", &"TimeScale 2", 0, &"Chainknife", &"TimeScale 3", 0, &"Idle", &"Transition", 0, &"TimeScale 3", &"Transition", 1, &"TimeScale"]
 
 [sub_resource type="Animation" id="Animation_aa1gc"]
 length = 0.001
@@ -612,6 +611,23 @@ tracks/9/keys = {
 "points": PackedFloat32Array(-0.261799, -0.25, 0, 0.25, 0, -0.139626, -0.25, 0, 0.25, 0, -0.261799, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0, 1, 2)
 }
+tracks/10/type = "method"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath(".")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"footstep"
+}, {
+"args": [],
+"method": &"footstep"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_sve6a"]
 resource_name = "chainknifeatk"
@@ -1096,11 +1112,11 @@ max_contacts_reported = 1
 contact_monitor = true
 lock_rotation = true
 script = ExtResource("1_msp2u")
+starter_health = 10000000000000
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeBlendTree_m40bq")
 anim_player = NodePath("../AnimationPlayer")
-active = true
 parameters/ATK/active = false
 parameters/ATK/internal_active = false
 parameters/ATK/request = 0
@@ -1152,19 +1168,16 @@ editor_settings/show_bone_gizmo = false
 
 [node name="bodymid" type="Bone2D" parent="sprite/Skeleton2D/bodydown"]
 position = Vector2(0, -4)
-scale = Vector2(1, 1)
 rest = Transform2D(1, 0, 0, 1, 0, -4)
 editor_settings/show_bone_gizmo = false
 
 [node name="bodyup" type="Bone2D" parent="sprite/Skeleton2D/bodydown/bodymid"]
 position = Vector2(0, -3)
-scale = Vector2(1, 1)
 rest = Transform2D(1, 0, 0, 1, 0, -3)
 editor_settings/show_bone_gizmo = false
 
 [node name="head" type="Bone2D" parent="sprite/Skeleton2D/bodydown/bodymid/bodyup"]
 position = Vector2(-1, -5)
-scale = Vector2(1, 1)
 rest = Transform2D(1, 0, 0, 1, -1, -5)
 auto_calculate_length_and_angle = false
 length = 7.0
@@ -1442,8 +1455,6 @@ texture_under = ExtResource("3_0rhgx")
 texture_over = ExtResource("4_o3fup")
 texture_progress = ExtResource("5_lhjjn")
 texture_progress_offset = Vector2(6, 5.1)
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 
 [connection signal="body_entered" from="weapon holder/chainknifehold" to="." method="_on_chainknifehold_body_entered"]
 [connection signal="body_entered" from="onground" to="." method="_on_onground_body_entered"]

@@ -21,6 +21,7 @@ var touch_ground = false
 
 @onready var current_enemy_health :int = enemy_starter_health
 @onready var target = get_node("/root/player holder/Player2d/Target")
+@onready var sound = preload("res://Scenes/sound.tscn")
 
 #		-cult selection-
 @export_category("cult selection")
@@ -168,6 +169,7 @@ func _melee_attack():
 		var melee_swing = melee_obj.instantiate()
 		add_child(melee_swing)
 		var dric = (player.global_position - global_position).normalized()
+		meele_sound()
 		if dric.x < 0:
 			melee_swing.scale.x *= -1
 	#		-melee attack-
@@ -184,7 +186,7 @@ func _range_attack():
 		projectile.global_position = range_point.global_position
 		var aimd : Vector2 = target.global_position - projectile.global_position
 		projectile.linear_velocity = aimd.normalized() * range_obj_speed
-		
+		range_sound()
 	#		-range attack-
 
 func enemy_health(damage):
@@ -198,3 +200,20 @@ func _on_onground_body_entered(_onground):
 
 func _on_onground_body_exited(_onground):
 	touch_ground = false
+
+#		-sound-
+func meele_sound():
+	var play_sound = sound.instantiate()
+	play_sound.sound_bit("res://Audio/baseballbat.wav")
+	add_child(play_sound)
+
+func range_sound():
+	var play_sound = sound.instantiate()
+	play_sound.sound_bit("res://Audio/bloodthrow.wav")
+	add_child(play_sound)
+
+func foot_steps():
+	var play_sound = sound.instantiate()
+	play_sound.sound_bit("res://Audio/footstep.wav")
+	add_child(play_sound)
+#		-sound-

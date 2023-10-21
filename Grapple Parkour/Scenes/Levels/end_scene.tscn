@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://bdwf8ksquosb3"]
+
+[ext_resource type="Texture2D" uid="uid://cmce1edgrohd" path="res://Sprites/end scene art.png" id="1_3tabj"]
+[ext_resource type="Script" path="res://Scripts/end_scene.gd" id="1_lhydb"]
+
+[node name="end_scene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lhydb")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="EndSceneArt" type="Sprite2D" parent="."]
+texture = ExtResource("1_3tabj")
+
+[node name="BTM" type="Button" parent="."]
+layout_mode = 0
+offset_left = 460.0
+offset_top = 455.0
+offset_right = 951.0
+offset_bottom = 532.0
+theme_override_font_sizes/font_size = 50
+text = "Back to main menu
+"
+
+[connection signal="pressed" from="BTM" to="." method="_on_btm_pressed"]

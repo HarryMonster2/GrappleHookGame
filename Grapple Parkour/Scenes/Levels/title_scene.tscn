@@ -1,7 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://c1g0v2fa4e3nb"]
+[gd_scene load_steps=13 format=3 uid="uid://c1g0v2fa4e3nb"]
 
 [ext_resource type="Script" path="res://Scripts/title_scene.gd" id="1_22mbx"]
 [ext_resource type="Texture2D" uid="uid://diwl6fmeeajmw" path="res://Sprites/title scene art.png" id="2_mkdxi"]
+[ext_resource type="Texture2D" uid="uid://uc1ogi4880nx" path="res://Sprites/Settings.png" id="3_ybo7e"]
+[ext_resource type="Texture2D" uid="uid://d3i5s8f4wh52" path="res://Sprites/credits.png" id="4_yk84m"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2jsqu"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -107,6 +109,7 @@ focus_next = NodePath("../Settings")
 focus_previous = NodePath("../Play")
 theme_override_styles/normal = SubResource("StyleBoxFlat_b0ead")
 theme_override_styles/hover = SubResource("StyleBoxFlat_5u0xe")
+toggle_mode = true
 
 [node name="Settings" type="Button" parent="."]
 layout_mode = 1
@@ -128,6 +131,7 @@ focus_next = NodePath("../Quit")
 focus_previous = NodePath("../Credits")
 theme_override_styles/normal = SubResource("StyleBoxFlat_njlp0")
 theme_override_styles/hover = SubResource("StyleBoxFlat_h45eg")
+toggle_mode = true
 
 [node name="Quit" type="Button" parent="."]
 layout_mode = 1
@@ -148,5 +152,15 @@ focus_previous = NodePath("../Settings")
 theme_override_styles/normal = SubResource("StyleBoxFlat_3syfh")
 theme_override_styles/hover = SubResource("StyleBoxFlat_cmdex")
 
+[node name="Settings2" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("3_ybo7e")
+
+[node name="Credits2" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("4_yk84m")
+
 [connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
+[connection signal="toggled" from="Credits" to="." method="_on_credits_toggled"]
+[connection signal="toggled" from="Settings" to="." method="_on_settings_toggled"]
 [connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]
